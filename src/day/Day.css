@@ -1,0 +1,9 @@
+.day-card {
+	height: 200px;
+	width: 14%;
+	border: 1px solid black;
+}
+
+.day-card h5 {
+	text-align: right;
+}
