@@ -1,0 +1,27 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #dedbde;
+}
+
+h3 {
+	background: #fff;
+	padding: 5px;
+	cursor: pointer;
+	border: 1px solid #dedbde;
+}
+
+.calendars,
+.search-input {
+	margin: 0 10px;
+	border-radius: 10px;
+}
+
+.search-input {
+	padding: 5px;
+}
+
+.view-selector {
+	display: flex;
+}
