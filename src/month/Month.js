@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import Day from '../day/Day'
 import './Month.css'
 
-const Month = ({ days }) => {
+const Month = ({ days, month }) => {
 	let dayCards = days.map((day, i) => <Day date={day.date} key={i} />)
 	return (
 		<div className="Month">
 			<header className="Month-header">
-				<h1 className="Month-title">October</h1>
+				<h1 className="Month-title">{month}</h1>
 			</header>
 			<div className="day-headers">
 				<span>Sunday</span>

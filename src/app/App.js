@@ -6,9 +6,29 @@ import './App.css'
 class App extends Component {
 	constructor() {
 		super()
+		this.handleSubmit = this.handleSubmit.bind(this)
+		this.saveEvent = this.saveEvent.bind(this)
 		this.state = {
-			dateArray: []
+			dateArray: [],
+			month: '' || 'October' //hardcoded to start
 		}
+	}
+
+	handleSubmit(e) {
+		if (e.keyCode === 13) {
+			this.setState({
+				month: e.target.value
+			})
+		}
+	}
+
+	saveEvent(obj) {
+		console.log('event obj', obj)
+		let dateObj = this.state.dateArray.filter(dateObj => dateObj.date === obj.date)
+		Object.assign(dateObj, obj)
+		this.setState({
+			dateArray: [...this.state.dateArray]
+		})
 	}
 
 	componentDidMount() {
@@ -17,7 +37,6 @@ class App extends Component {
 
 		let datesArray = dates.map((date, i) => Object.assign({}, { date: i + 1 }))
 
-		console.log(datesArray)
 		this.setState({
 			dateArray: datesArray
 		})
@@ -26,8 +45,8 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-				<Header />
-				<Month days={this.state.dateArray} />
+				<Header handleSubmit={this.handleSubmit} dayArray={this.state.dateArray} saveEvent={this.saveEvent} />
+				<Month days={this.state.dateArray} month={this.state.month} />
 			</div>
 		)
 	}

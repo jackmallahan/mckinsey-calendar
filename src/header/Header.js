@@ -5,43 +5,85 @@ import './Header.css'
 class Header extends Component {
 	constructor() {
 		super()
-		this.handleChange = this.handleChange.bind(this)
-		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleSearchChange = this.handleSearchChange.bind(this)
+		this.handleEventChange = this.handleEventChange.bind(this)
+		this.sendEvent = this.sendEvent.bind(this)
 		this.state = {
-			input: ''
+			searchInput: '',
+			eventInput: '',
+			eventTime: '',
+			eventDay: ''
 		}
 	}
 
-	handleChange(e) {
+	handleSearchChange(e) {
 		this.setState({
-			input: e.target.value
+			searchInput: e.target.value
 		})
 	}
 
-	handleSubmit(e) {
-		if (e.keyCode === 13) {
-			console.log(this.state.input)
-		}
+	handleEventChange(e) {
+		this.setState({
+			eventInput: e.target.value
+		})
+	}
+
+	sendEvent() {
+		this.props.saveEvent({ date: this.state.eventDay, time: this.state.eventTime, title: this.state.eventInput })
 	}
 
 	render() {
+		const dates = Object.keys(this.props.dayArray)
+		dates.shift()
+		dates.push(31) //hardcoded and hacky, running out of time!
+		const dateOptions = dates.map((date, i) => <option key={i}>{date}</option>)
+
+		const hoursArray = [...Array(25).keys()]
+		hoursArray.shift()
+
+		const hourSelect = hoursArray.map((hour, i) => (
+			<option key={i} value={hour}>
+				{hour}
+			</option>
+		))
+
 		return (
-			<section className="header">
-				<h3 className="calendars">Calendars</h3>
-				<div className="view-selector">
-					<h3 className="day">Day</h3>
-					<h3>Week</h3>
-					<h3>Month</h3>
-					<h3 className="year">Year</h3>
-				</div>
-				<input
-					onChange={this.handleChange}
-					onKeyDown={this.handleSubmit}
-					className="search-input"
-					placeholder="[{}, {}]"
-					value={this.props.input}
-				/>
-			</section>
+			<div>
+				<section className="header">
+					<div className="left-side">
+						<h3 className="calendars">Calendars</h3>
+					</div>
+					<div className="view-selector">
+						<h3 className="day">Day</h3>
+						<h3>Week</h3>
+						<h3>Month</h3>
+						<h3 className="year">Year</h3>
+					</div>
+					<input
+						onChange={this.handleSearchChange}
+						onKeyDown={e => this.props.handleSubmit(e)}
+						className="search-input"
+						placeholder="Search Month"
+						value={this.props.searchInput}
+					/>
+				</section>
+				<section className="add-event">
+					<select className="day-select">
+						<option>Day</option>
+						{dateOptions}
+					</select>
+					<input
+						className="event-input"
+						onChange={this.handleEventChange}
+						value={this.props.eventInput}
+						placeholder="Event Title"
+					/>
+					<select className="time-select">{hourSelect}</select>
+					<button className="save-event-btn" onClick={this.sendEvent}>
+						Add Event
+					</button>
+				</section>
+			</div>
 		)
 	}
 }

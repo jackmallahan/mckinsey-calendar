@@ -12,10 +12,26 @@ h3 {
 	border: 1px solid #dedbde;
 }
 
+.left-side {
+	display: flex;
+	justify-content: space-between;
+}
+
+.left-side button {
+	background-color: white;
+	font-size: 1em;
+	cursor: pointer;
+}
+
 .calendars,
 .search-input {
 	margin: 0 10px;
 	border-radius: 10px;
+}
+
+.search-input:focus,
+.left-side button:focus {
+	outline: none;
 }
 
 .search-input {
